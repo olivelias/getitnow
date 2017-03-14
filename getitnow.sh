@@ -8,7 +8,7 @@
 ########################
 
 # V 0.2 (14/03/2017)
-# - bannera added
+# - banner added
 # - check USB space available and alert if insufficent space
 # - NTFS / EXT support
 # - remove NTFS / FAT dirty bit if exist
@@ -17,7 +17,7 @@
 # - FAT support !!
 
 ##########
-## VARS ##
+#  VARS  #
 ##########
 
 # LOG file + initialization
@@ -27,14 +27,14 @@ touch ${LOG}
 # USB mountpoint
 USB="/media/pi/USB"
 
-# Music folder
-MUSIC="/home/pi/Music"
+# Folder
+FOLDER="/home/pi/Music"
 
 # FS Type
 FS=$(lsblk -f /dev/sd*1 | grep sd | awk '{print$2}')
 
-# Local music folder size
-LOCAL_SIZE=$(du -ks $MUSIC | awk '{print$1}')
+# Local folder size
+LOCAL_SIZE=$(du -ks $FOLDER | awk '{print$1}')
 
 # Init remote USB folder size
 USB_SIZE=0
