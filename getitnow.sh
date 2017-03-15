@@ -43,36 +43,36 @@ USB_SIZE=0
 # SCRIPT #
 ##########
 
-echo "------ START ------"                                                      >> ${LOG} 2>&1
+echo "------ START ------" >> ${LOG} 2>&1
 
-echo "### USB folder creation : ${USB} ###"                                     >> ${LOG} 2>&1
-mkdir ${USB}                                                                    >> ${LOG} 2>&1
+echo "### USB folder creation : ${USB} ###" >> ${LOG} 2>&1
+mkdir ${USB} >> ${LOG} 2>&1
 
-echo "### Umount USB if already mounted ${USB} ###"                             >> ${LOG} 2>&1
-umount -f /dev/sd*1                                                             >> ${LOG} 2>&1
+echo "### Umount USB if already mounted ${USB} ###" >> ${LOG} 2>&1
+umount -f /dev/sd*1 >> ${LOG} 2>&1
 
-echo "### Mounting /dev/sd*1 partition ###"                                     >> ${LOG} 2>&1
-echo "### Filesystem=$FS ###"                                                   >> ${LOG} 2>&1
+echo "### Mounting /dev/sd*1 partition ###" >> ${LOG} 2>&1
+echo "### Filesystem=$FS ###" >> ${LOG} 2>&1
 if [ $FS = "ntfs" ] ; then
-    echo "### Fix NTFS if USB key not safely removed  ###"                      >> ${LOG} 2>&1
-    ntfsfix /dev/sd*1                                                           >> ${LOG} 2>&1
-    mount -o rw,uid=pi,gid=users,iocharset=iso8859-1,utf8 /dev/sd*1 ${USB}      >> ${LOG} 2>&1
+    echo "### Fix NTFS if USB key not safely removed  ###" >> ${LOG} 2>&1
+    ntfsfix /dev/sd*1 >> ${LOG} 2>&1
+    mount -o rw,uid=pi,gid=users,iocharset=iso8859-1,utf8 /dev/sd*1 ${USB} >> ${LOG} 2>&1
 fi
 if [ $FS = "vfat" ] ; then
-    echo "### Fix FAT if USB key not safely removed  ###"                       >> ${LOG} 2>&1
-    fsck -a /dev/sda1                                                           >> ${LOG} 2>&1
-    mount -o rw,uid=pi,gid=users,iocharset=iso8859-1,utf8 /dev/sd*1 ${USB}      >> ${LOG} 2>&1
+    echo "### Fix FAT if USB key not safely removed  ###" >> ${LOG} 2>&1
+    fsck -a /dev/sda1 >> ${LOG} 2>&1
+    mount -o rw,uid=pi,gid=users,iocharset=iso8859-1,utf8 /dev/sd*1 ${USB} >> ${LOG} 2>&1
 fi
 if [ $FS = "ext*" ] ; then
-    mount  /dev/sd*1 ${USB}                                                     >> ${LOG} 2>&1
-    chown pi:users ${USB}
-    chmod 750 ${USB}
+    mount  /dev/sd*1 ${USB} >> ${LOG} 2>&1
+    chown pi:users ${USB} >> ${LOG} 2>&1
+    chmod 750 ${USB} >> ${LOG} 2>&1
 fi
 
-echo "### Check remaining size on USB ###"                                      >> ${LOG} 2>&1
+echo "### Check remaining size on USB ###" >> ${LOG} 2>&1
 USB_SIZE=$(df -k | grep "/dev/sd." | awk '{print $4}')
 
-echo "### Comparison of local and remote size ###"                              >> ${LOG} 2>&1
+echo "### Comparison of local and remote size ###" >> ${LOG} 2>&1
 if [ $USB_SIZE -lt $LOCAL_SIZE ] 
 then
     su - pi -c "
@@ -80,27 +80,27 @@ then
         terminator -fb --command='toilet -f big -F gay FULL;
         sleep 10;
     '"
-    echo "### Insufficient disk space"                                          >> ${LOG} 2>&1
-    echo "### Umount ${USB} directory ###"                                      >> ${LOG} 2>&1
-    umount -f ${USB}                                                            >> ${LOG} 2>&1
-    echo "### Remove ${USB} directory ###"                                      >> ${LOG} 2>&1
-    rmdir ${USB}                                                                >> ${LOG} 2>&1
-    echo "------ END ------"                                                    >> ${LOG} 2>&1
+    echo "### Insufficient disk space" >> ${LOG} 2>&1
+    echo "### Umount ${USB} directory ###" >> ${LOG} 2>&1
+    umount -f ${USB} >> ${LOG} 2>&1
+    echo "### Remove ${USB} directory ###" >> ${LOG} 2>&1
+    rmdir ${USB} >> ${LOG} 2>&1
+    echo "------ END ------" >> ${LOG} 2>&1
     exit 0
 fi
 
-echo "### Start of transfert ###"                                               >> ${LOG} 2>&1
+echo "### Start of transfert ###" >> ${LOG} 2>&1
 su - pi -c "
     export DISPLAY=':0';
     terminator -fb --command='toilet -f big -F gay get it now;
     rsync -rltzuv --progress  /home/pi/Music/* /media/pi/USB/.;
     sleep 10;
-'"                                                                              >> ${LOG} 2>&1
+'" >> ${LOG} 2>&1
 
-echo "### End of transfert ###"                                                 >> ${LOG} 2>&1
-echo "### Umount ${USB} directory ###"                                          >> ${LOG} 2>&1
-umount -f ${USB}                                                                >> ${LOG} 2>&1
-echo "### Removing ${USB} directory  ###"                                       >> ${LOG} 2>&1
-rmdir ${USB}                                                                    >> ${LOG} 2>&1
-echo "------ END ------"                                                        >> ${LOG} 2>&1
+echo "### End of transfert ###" >> ${LOG} 2>&1
+echo "### Umount ${USB} directory ###" >> ${LOG} 2>&1
+umount -f ${USB} >> ${LOG} 2>&1
+echo "### Removing ${USB} directory  ###" >> ${LOG} 2>&1
+rmdir ${USB} >> ${LOG} 2>&1
+echo "------ END ------" >> ${LOG} 2>&1
 exit 0
