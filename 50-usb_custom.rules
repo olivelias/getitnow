@@ -1,6 +1,1 @@
-# UDEV rules to setup automatic backup upon disk insertion
-# You can get the discriminant informations with the following command :
-#   udevinfo -a -p $(udevinfo -q path -n /dev/sdb)
-# Backup - Rule for the hard disk that will backup video files
-#Create a udev rules /etc/udev/rules.d/50-backup.rules
 KERNEL=="sd*1", ACTION=="add", SUBSYSTEMS=="block", RUN+="/home/pi/Scripts/getitnow.sh %k"
