@@ -3,18 +3,9 @@
 ########################
 # Script : getitnow.sh #
 # Author : olivelias   #
-# Version : 0.2	       #
+# Version : 0.2.0      #
 # Date : 14/03/2017    #
 ########################
-
-# V 0.2 (14/03/2017)
-# - banner added
-# - check USB space available and alert if insufficent space
-# - NTFS / EXT support
-# - remove NTFS / FAT dirty bit if exist
-#
-# V 0.1 (17/12/2016)
-# - FAT support !!
 
 ##########
 #  VARS  #
