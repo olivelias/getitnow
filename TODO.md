@@ -1,6 +1,7 @@
 # Todo : 
 
 - change logging method --> done
+- change udev system --> done
 - change banner
 - HFS support
 - several partitions on a USB key
