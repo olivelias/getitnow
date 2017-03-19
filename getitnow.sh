@@ -91,6 +91,7 @@ su - pi -c "
     export DISPLAY=':0';
     terminator -fb --command='toilet -f big -F gay get it now;
     rsync -rltzuv --progress  /home/pi/Music/* /media/pi/USB/.;
+    sync;
     sleep 10;
 '"
 
