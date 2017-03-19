@@ -15,7 +15,7 @@
 LOG=/var/log/transfert.log
 exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
-exec 1>${LOG} 2>&1
+exec 1>>${LOG} 2>&1
 
 # USB mountpoint
 USB="/media/pi/USB"
@@ -37,6 +37,7 @@ USB_SIZE=0
 ##########
 
 echo "------ START ------"
+date +%Y-%m-%d-%Hh%Mm%Ss
 
 echo "### USB folder creation : ${USB} ###"
 mkdir ${USB}
@@ -78,6 +79,7 @@ then
     umount -f ${USB}
     echo "### Remove ${USB} directory ###"
     rmdir ${USB}
+    date +%Y-%m-%d-%Hh%Mm%Ss
     echo "------ END ------"
     exit 0
 fi
@@ -95,5 +97,6 @@ echo "### Umount ${USB} directory ###"
 umount -f ${USB}
 echo "### Removing ${USB} directory  ###"
 rmdir ${USB}
+date +%Y-%m-%d-%Hh%Mm%Ss
 echo "------ END ------"
 exit 0
