@@ -24,7 +24,7 @@ USB="/media/pi/USB"
 FOLDER="/home/pi/Music"
 
 # FS Type
-FS=$(lsblk -f /dev/sd*1 | grep sd | awk '{print$2}')
+FS=$(lsblk -f /dev/$1 | grep sd | awk '{print$2}')
 
 # Local folder size
 LOCAL_SIZE=$(du -ks $FOLDER | awk '{print$1}')
@@ -39,26 +39,28 @@ USB_SIZE=0
 echo "------ START ------"
 date +%Y-%m-%d-%Hh%Mm%Ss
 
+echo "TEST !!! : $1"
+
 echo "### USB folder creation : ${USB} ###"
 mkdir ${USB}
 
 echo "### Umount USB if already mounted ${USB} ###"
-umount -f /dev/sd*1
+umount -f /dev/$1
 
-echo "### Mounting /dev/sd*1 partition ###"
+echo "### Mounting /dev/$1 partition ###"
 echo "### Filesystem=$FS ###"
 if [ $FS = "ntfs" ] ; then
     echo "### Fix NTFS if USB key not safely removed  ###"
-    ntfsfix /dev/sd*1
-    mount -o rw,uid=pi,gid=users,iocharset=iso8859-1,utf8 /dev/sd*1 ${USB}
+    ntfsfix /dev/$1
+    mount -o rw,uid=pi,gid=users,iocharset=iso8859-1,utf8 /dev/$1 ${USB}
 fi
 if [ $FS = "vfat" ] ; then
     echo "### Fix FAT if USB key not safely removed  ###"
     fsck -a /dev/sda1
-    mount -o rw,uid=pi,gid=users,iocharset=iso8859-1,utf8 /dev/sd*1 ${USB}
+    mount -o rw,uid=pi,gid=users,iocharset=iso8859-1,utf8 /dev/$1 ${USB}
 fi
 if [ $FS = "ext*" ] ; then
-    mount  /dev/sd*1 ${USB}
+    mount  /dev/$1 ${USB}
     chown pi:users ${USB}
     chmod 750 ${USB}
 fi
