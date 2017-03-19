@@ -1,5 +1,6 @@
-Todo : 
+# Todo : 
 
+- change logging method 
 - change banner
 - HFS support
 - several partitions on a USB key
