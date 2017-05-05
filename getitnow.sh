@@ -92,7 +92,8 @@ su - pi -c "
     terminator -fb --command='toilet -f big -F gay get it now;
     rsync -rltzuv --progress  /home/pi/Music/* /media/pi/USB/.;
     sync;
-    sleep 10;
+    toilet -f big -F gay done;
+    sleep 5;
 '"
 
 echo "### End of transfert ###"
